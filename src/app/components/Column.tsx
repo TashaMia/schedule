@@ -1,29 +1,41 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Column(props: { data: number }) {
-    let heightCount
-    let pr = props.data
+    const [height, setHeight] = useState<number>(0)
+    const val = props.data
+    const blocks = [
+        { startsWith: 0, endsWith: 500 },
+        { startsWith: 500, endsWith: 1000 },
+        { startsWith: 1000, endsWith: 2000 },
+        { startsWith: 2000, endsWith: 5000 },
+        { startsWith: 5000, endsWith: 10000 },
+    ]
+    const arrayOfPixels = blocks.map((block, index) => {
+        if (block.startsWith > val) return 0
+        const height = countHeight({
+            val,
+            difference: block.endsWith - block.startsWith,
+        })
+        console.log({ [index]: height })
+        return height
+    })
 
-    let percent
-    if (pr < 1000) {
-        percent = (pr * 100) / 500
-        heightCount = (70 * percent) / 100
+    function countHeight({
+        val,
+        difference,
+    }: {
+        val: number
+        difference: number
+    }) {
+        const percentage = val > difference ? 100 : (val * 100) / difference
+        const height = (50 * percentage) / 100
+        return height
     }
-
-    if (pr >= 1000 && pr <= 2000) {
-        percent = (pr * 100) / 2000
-        heightCount = 95 + (60 * percent) / 100
-    }
-
-    if (pr > 2000 && pr <= 5000) {
-        percent = (pr * 100) / 5000
-        heightCount = 155 + (60 * percent) / 100
-    }
-    if (pr > 5000 && pr <= 10000) {
-        percent = (pr * 100) / 10000
-        heightCount = 195 + (60 * percent) / 100
-    }
+    useEffect(() => {
+        const height = arrayOfPixels.reduce((a, b) => a + b)
+        setHeight(height - 28)
+    }, [arrayOfPixels])
 
     const [visiblePrice, setVisiblePrice] = useState(false)
 
@@ -41,11 +53,11 @@ export default function Column(props: { data: number }) {
             </div>
             <div
                 className={`
-                ${heightCount && heightCount > 150 && 'animate-columnUpMax '} 
+                ${height && height > 150 && 'animate-columnUpMax '} 
                 ${
-                    heightCount && heightCount < 90 && 'animate-columnUpMin '
+                    height && height < 90 && 'animate-columnUpMin '
                 }  ' w-4 mt-8 rounded-[4px]  bg-blue hover:shadow-columnShadow '`}
-                style={{ height: heightCount }}
+                style={{ height: height }}
                 onMouseEnter={() => setVisiblePrice(true)}
                 onMouseLeave={() => setVisiblePrice(false)}
             ></div>

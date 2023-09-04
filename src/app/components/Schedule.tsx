@@ -83,7 +83,7 @@ export default function Schedule() {
                                 >
                                     {data && <Column data={data[index + 1]} />}
 
-                                    <div className="h-4">{day}</div>
+                                    <div className="h-4 ">{day}</div>
                                 </div>
                             )
                         })}
