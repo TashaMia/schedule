@@ -1,8 +1,5 @@
 'use client'
-import useGetDataMonth from '@/hooks/useGetDataMonth'
-import { SetStateAction } from 'jotai'
-import { usePathname } from 'next/navigation'
-import { Dispatch, useState } from 'react'
+import { useState } from 'react'
 
 export default function Column(props: { data: number }) {
     let heightCount

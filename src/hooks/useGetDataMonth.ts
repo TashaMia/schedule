@@ -5,7 +5,7 @@ type dataRange = {
 }
 
 export default function useGetDataMonth({ filter }: { filter: string }) {
-    const [data, setData] = useState()
+    const [data, setData] = useState<{ [index: string]: number }>()
 
     async function getData() {
         const res = await fetch(
