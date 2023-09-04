@@ -6,27 +6,25 @@ export default function Column(props: { data: number }) {
     let pr = props.data
 
     let percent
-    if (pr <= 500) {
+    if (pr < 1000) {
         percent = (pr * 100) / 500
         heightCount = (70 * percent) / 100
     }
-    if (pr > 500 && pr <= 1000) {
-        percent = (pr * 100) / 500
-        heightCount = (65 * percent) / 100
-    }
-    if (pr > 1000 && pr <= 2000) {
+
+    if (pr >= 1000 && pr <= 2000) {
         percent = (pr * 100) / 2000
-        heightCount = 100 + (60 * percent) / 100
+        heightCount = 95 + (60 * percent) / 100
     }
 
     if (pr > 2000 && pr <= 5000) {
         percent = (pr * 100) / 5000
-        heightCount = 150 + (60 * percent) / 100
+        heightCount = 155 + (60 * percent) / 100
     }
     if (pr > 5000 && pr <= 10000) {
         percent = (pr * 100) / 10000
-        heightCount = 190 + (60 * percent) / 100
+        heightCount = 195 + (60 * percent) / 100
     }
+
     const [visiblePrice, setVisiblePrice] = useState(false)
 
     return (

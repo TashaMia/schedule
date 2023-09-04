@@ -57,6 +57,10 @@ export default function Schedule() {
     const data = useGetDataMonth({ filter: path })
     const arrayOfData: number[] = []
 
+    let gap
+
+    path == '/half_year' ? (gap = 'gap-6.0rem') : ''
+    path == '/month' ? (gap = 'gap-2.0rem') : ''
     for (let key in data) {
         arrayOfData.push(data[key])
     }
@@ -68,44 +72,57 @@ export default function Schedule() {
                 })}
             </div>
 
-            <div className="flex w-[790px]  ml-5 text-xl items-end justify-between pt-[16px] pb-[0px] h-[320px] ">
-                {path == '/month' &&
-                    dayOfMonth.map((day, index) => {
-                        return (
-                            <div
-                                key={day + index}
-                                className=" pb-[14px] flex flex-col items-center gap-4 "
-                            >
-                                {data && <Column data={data[index + 1]} />}
+            <div className="flex w-[790px]  gap-[2.0rem] text-xl items-end justify-between pt-[16px] h-[320px] ">
+                {path == '/month' && (
+                    <div className="flex w-[790px] pl-[20px]  gap-[9.5px] text-xl items-end justify-between pt-[16px] h-[320px] ">
+                        {dayOfMonth.map((day, index) => {
+                            return (
+                                <div
+                                    key={day + index}
+                                    className=" pb-[12px]  flex flex-col items-center  gap-4 "
+                                >
+                                    {data && <Column data={data[index + 1]} />}
 
-                                <div className="h-4">{day}</div>
-                            </div>
-                        )
-                    })}
-                {path == '/half_year' &&
-                    monthOfHalfYear.map((month, index) => {
-                        return (
-                            <div
-                                key={month}
-                                className=" flex flex-col items-center gap-[10px] "
-                            >
-                                {data && <Column data={arrayOfData[index]} />}{' '}
-                                <div className="h-4">{month}</div>
-                            </div>
-                        )
-                    })}
-                {path == '/year' &&
-                    monthOfYear.map((month, index) => {
-                        return (
-                            <div
-                                key={month}
-                                className=" flex items-center flex-col gap-[9px]"
-                            >
-                                {data && <Column data={arrayOfData[index]} />}{' '}
-                                <div>{month}</div>
-                            </div>
-                        )
-                    })}
+                                    <div className="h-4">{day}</div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
+                {path == '/half_year' && (
+                    <div className="flex w-[790px]  gap-[6.0rem] text-xl items-end justify-between pt-[16px] h-[320px] ">
+                        {monthOfHalfYear.map((month, index) => {
+                            return (
+                                <div
+                                    key={month}
+                                    className="  ml-4  pb-[14px] flex flex-col items-center gap-[11px] "
+                                >
+                                    {data && (
+                                        <Column data={arrayOfData[index]} />
+                                    )}{' '}
+                                    <div className="h-4">{month}</div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
+                {path == '/year' && (
+                    <div className="flex w-[790px]  gap-[37px] text-xl ml-2 items-end justify-between pt-[16px] h-[320px] ">
+                        {monthOfYear.map((month, index) => {
+                            return (
+                                <div
+                                    key={month}
+                                    className=" flex items-center flex-col gap-[9px]"
+                                >
+                                    {data && (
+                                        <Column data={arrayOfData[index]} />
+                                    )}{' '}
+                                    <div>{month}</div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     )
